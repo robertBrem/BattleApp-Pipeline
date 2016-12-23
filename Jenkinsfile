@@ -12,6 +12,6 @@ withEnv([   "VERSION=1.0.${currentBuild.number}",
   stage "start test environment"
   node {
     git url: "https://github.com/robertBrem/BattleApp-StartTestEnv"
-    sh "./start"
+    sh "./start.js"
   }
 }
