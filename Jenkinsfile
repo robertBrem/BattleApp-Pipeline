@@ -31,4 +31,12 @@ withEnv([   "VERSION=1.0.${currentBuild.number}",
     sh "${mvnHome}/bin/mvn clean install failsafe:integration-test"
     step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
   }
+
+  stage "last test"
+  node {
+    git url: "https://github.com/robertBrem/BattleApp-LT"
+    def mvnHome = tool 'M3'
+    sh "${mvnHome}/bin/mvn clean verify -Dperformancetest.webservice.host=disruptor.ninja -Dperformancetest.webservice.port=31080 -Dperformancetest.webservice.threads=5 -Dperformancetest.webservice.iterations=500"
+    archiveArtifacts artifacts: 'target/reports/*.*', fingerprint: true
+  }
 }
