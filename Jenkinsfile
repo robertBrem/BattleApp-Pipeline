@@ -23,4 +23,12 @@ withEnv([   "VERSION=1.0.${currentBuild.number}",
     sh "PORT=31080 ${mvnHome}/bin/mvn clean install failsafe:integration-test"
     step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
   }
+
+  stage "ui test"
+  node {
+    git url: "https://github.com/robertBrem/BattleApp-UIT"
+    def mvnHome = tool 'M3'
+    sh "${mvnHome}/bin/mvn clean install failsafe:integration-test"
+    step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
+  }
 }
