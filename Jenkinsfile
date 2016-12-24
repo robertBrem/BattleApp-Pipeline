@@ -52,6 +52,7 @@ withEnv([   "VERSION=1.0.${currentBuild.number}",
   input "everything ok?"
 
   stage "start canary"
+  input "deploy the canary?"
   node {
     git url: "https://github.com/robertBrem/BattleApp-Canary"
     sh "./start.js"
