@@ -20,7 +20,7 @@ withEnv([   "VERSION=1.0.${currentBuild.number}",
   node {
     git url: "https://github.com/robertBrem/BattleApp-ST"
     def mvnHome = tool 'M3'
-    sh "PORT=31080 ${mvnHome}/bin/mvn clean install failsafe:integration-test"
+    sh "PORT=31080 ${mvnHome}/bin/mvn clean install failsafe:integration-test failsafe:verify"
     step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
   }
 
@@ -28,7 +28,7 @@ withEnv([   "VERSION=1.0.${currentBuild.number}",
   node {
     git url: "https://github.com/robertBrem/BattleApp-UIT"
     def mvnHome = tool 'M3'
-    sh "${mvnHome}/bin/mvn clean install failsafe:integration-test"
+    sh "${mvnHome}/bin/mvn clean install failsafe:integration-test failsafe:verify"
     step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
   }
 
@@ -44,7 +44,7 @@ withEnv([   "VERSION=1.0.${currentBuild.number}",
   node {
     git url: "https://github.com/robertBrem/BattleApp-CDCT"
     def mvnHome = tool 'M3'
-    sh "PORT=31080 ${mvnHome}/bin/mvn clean install failsafe:integration-test"
+    sh "PORT=31080 ${mvnHome}/bin/mvn clean install failsafe:integration-test failsafe:verify"
     step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
   }
 
