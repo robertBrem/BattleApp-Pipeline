@@ -1,6 +1,7 @@
 withEnv([   "VERSION=1.0.${currentBuild.number}",
             "REGISTRY_EMAIL=brem_robert@hotmail.com",
-            "KUBECTL=kubectl"]) {
+            "KUBECTL=kubectl",
+            "HOST=disruptor.ninja"]) {
   stage "checkout, build, test and publish"
   node {
     git url: "https://github.com/robertBrem/battleapp"
@@ -19,7 +20,7 @@ withEnv([   "VERSION=1.0.${currentBuild.number}",
   node {
     git url: "https://github.com/robertBrem/BattleApp-ST"
     def mvnHome = tool 'M3'
-    sh "${mvnHome}/bin/mvn clean install failsafe:integration-test"
+    sh "PORT=31080 ${mvnHome}/bin/mvn clean install failsafe:integration-test"
     step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
   }
 }
