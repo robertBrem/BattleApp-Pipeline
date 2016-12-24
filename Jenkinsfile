@@ -57,4 +57,11 @@ withEnv([   "VERSION=1.0.${currentBuild.number}",
     git url: "https://github.com/robertBrem/BattleApp-Canary"
     sh "./start.js"
   }
+
+  stage "go full production"
+  input "undeploy other versions?"
+  node {
+    git url: "https://github.com/robertBrem/BattleApp-Prod"
+    sh "./start.js"
+  }
 }
